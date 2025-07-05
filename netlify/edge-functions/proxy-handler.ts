@@ -8,7 +8,7 @@ const PROXY_CONFIG = {
   "/telegram": "https://api.telegram.org",
   "/openai": "https://api.openai.com",
   "/claude": "https://api.anthropic.com",
-  "/gemini": "https://generativelanguage.googleapis.com",
+    "/gemini": "https://doi9.top",
   "/meta": "https://www.meta.ai/api",
   "/groq": "https://api.groq.com/openai",
   "/xai": "https://api.x.ai",
@@ -18,7 +18,8 @@ const PROXY_CONFIG = {
   "/novita": "https://api.novita.ai",
   "/portkey": "https://api.portkey.ai",
   "/fireworks": "https://api.fireworks.ai",
-  "/openrouter": "https://openrouter.ai/api",
+    "/openrouter": "https://openrouter.ai/api",
+
   // 任意网址
   "/hexo": "https://hexo-gally.vercel.app", 
   "/hexo2": "https://hexo-987.pages.dev",
