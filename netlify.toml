@@ -1,17 +1,25 @@
 # netlify.toml
 
-
 [build]
-  # 假设你的静态内容在 public 目录，如果不是，请修改
-  # 如果没有构建步骤，可以注释掉 command
-  # command = "echo 'No build command'"
-  publish = "public" # 确保这个目录存在或与你的项目匹配
+  # 这个通常不需要改，保持默认即可
+  command = "echo 'No build command required'"
+  publish = "public" # 如果你没有前端页面，可以随便指定一个不存在的目录
 
-# --- Edge Functions 配置 ---
+[functions]
+  # 告诉 Netlify 我们的函数代码放在哪个文件夹
+  directory = "netlify/functions"
 
-# 使用一个通配符路径将所有请求发送到 proxy-handler 函数
-# 函数内部逻辑将决定是否进行代理
-[[edge_functions]]
-  function = "proxy-handler" # 对应 netlify/edge-functions/proxy-handler.ts
-  path = "/*"
+# 这是最关键的部分：路由规则
+[[redirects]]
+  # 当访问你网站的 /api/* 路径时...
+  # 例如：https://your-site.netlify.app/api/v1/chat/completions
+  from = "/api/*"
 
+  # ...将请求交给 /netlify/functions/proxy 这个函数来处理
+  # 注意：to 地址里的 :splat 会被替换为上面 from 地址里的 * 通配符内容
+  # 例如，* 是 v1/chat/completions，那么 to 就会变成 /.netlify/functions/proxy?path=v1/chat/completions
+  to = "/.netlify/functions/proxy?path=:splat"
+  
+  # status = 200 表示这不是一个普通的跳转，而是一个“重写”
+  # 请求会由函数处理后返回，URL地址栏不会变
+  status = 200
